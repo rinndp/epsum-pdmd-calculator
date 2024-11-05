@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         arrayListButtons.add(button7);
         arrayListButtons.add(button8);
         arrayListButtons.add(button9);
-        arrayListButtons.add(buttonSubstract);
-        arrayListButtons.add(buttonMultiply);
-        arrayListButtons.add(buttonDivide);
         arrayListButtons.add(buttonNegative);
         arrayListButtons.add(buttonDot);
         arrayListButtons.add(buttonResult);
@@ -81,10 +75,48 @@ public class MainActivity extends AppCompatActivity {
         buttonPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String pantallaTexto = pantalla.getText().toString();
-                pantallaArriba.setText(pantallaTexto+ " + ");
+                pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
+                pantalla.setText(null);
             }
         });
+
+        buttonMultiply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pantallaTexto = pantalla.getText().toString();
+                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " * ");
+                pantalla.setText(null);
+            }
+        });
+
+        buttonSubstract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pantallaTexto = pantalla.getText().toString();
+                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " - ");
+                pantalla.setText(null);
+            }
+        });
+
+        buttonDivide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pantallaTexto = pantalla.getText().toString();
+                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " / ");
+                pantalla.setText(null);
+            }
+        });
+        buttonResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Con el ScriptEngineManager
+
+            }
+        });
+
+
 
         buttonBackspace.setOnClickListener(new View.OnClickListener() {
             @Override
