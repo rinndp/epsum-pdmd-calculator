@@ -9,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import java.util.ArrayList;
+import com.udojava.evalex.Expression;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         Button buttonResult = findViewById(R.id.buttonResult);
         Button buttonBackspace = findViewById(R.id.buttonBackspace);
         Button buttonC = findViewById(R.id.buttonC);
+        Button buttonBrackets = findViewById(R.id.buttonBrackets);
 
 
         ArrayList <Button> arrayListButtons = new ArrayList<>();
-        arrayListButtons.add(button0);
         arrayListButtons.add(button1);
         arrayListButtons.add(button2);
         arrayListButtons.add(button3);
@@ -60,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
         arrayListButtons.add(button7);
         arrayListButtons.add(button8);
         arrayListButtons.add(button9);
-        arrayListButtons.add(buttonNegative);
-        arrayListButtons.add(buttonDot);
-        arrayListButtons.add(buttonResult);
 
         TextView pantalla = findViewById(R.id.screen);
         TextView pantallaArriba = findViewById(R.id.screen2);
@@ -79,10 +75,14 @@ public class MainActivity extends AppCompatActivity {
         buttonPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String pantallaTexto = pantalla.getText().toString();
-                pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
-                pantalla.setText(null);
+                if (!pantallaTexto.isEmpty()) {
+                    char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                    if (lastChar != '-' && lastChar != '+') {
+                        pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
+                        pantalla.setText(null);
+                    }
+                }
             }
         });
 
@@ -90,8 +90,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
-                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " * ");
-                pantalla.setText(null);
+                if (!pantallaTexto.isEmpty()) {
+                    char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                    if (lastChar != '/' && lastChar != '*') {
+                        pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " * ");
+                        pantalla.setText(null);
+                    }
+                }
             }
         });
 
@@ -99,8 +104,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
-                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " - ");
-                pantalla.setText(null);
+                if (!pantallaTexto.isEmpty()) {
+                    char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
+                    if (lastChar != '-' && lastChar != '+') {
+                        pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " - ");
+                        pantalla.setText(null);
+                    }
+                }
             }
         });
 
@@ -108,28 +118,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
-                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " / ");
-                pantalla.setText(null);
+                if (!pantallaTexto.isEmpty()) {
+                char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
+                if (lastChar != '/' && lastChar != '*' ) {
+                    pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " / ");
+                    pantalla.setText(null);
+                }
+                }
             }
         });
         buttonResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Con el ScriptEngineManager
-                ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-                ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("Javascript");
+                String operacion = pantallaArriba.getText().toString() + pantalla.getText().toString();
                 try {
-                    Object resultado = scriptEngine.eval(pantallaArriba.getText().toString());
+                    Expression expression = new Expression(operacion);
+                    String resultado = expression.eval().toString();
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    String resultadoFormateado = decimalFormat.format(Double.parseDouble(resultado));
                     pantallaArriba.setText(null);
-                    pantalla.setText(""+resultado);
-                } catch (ScriptException e) {
-                    throw new RuntimeException(e);
+                    pantalla.setText(resultadoFormateado);
+                } catch (Exception e) {
+                    pantalla.setText("Error");
                 }
-
             }
         });
-
-
 
         buttonBackspace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,11 +154,46 @@ public class MainActivity extends AppCompatActivity {
                     String caracter = pantallaCharAdd[i];
                     textoAcumulado += caracter;
                     pantalla.setText(textoAcumulado);
-
                 }
-
                 if (pantallaCharAdd.length == 1) {
                     pantalla.setText("");
+                }
+            }
+        });
+
+        button0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String textoPantalla = pantalla.getText().toString();
+                if (!textoPantalla.isEmpty()) {
+                    textoPantalla += button0.getText().toString();
+                    pantalla.setText(textoPantalla);
+                }
+            }
+        });
+
+        buttonBrackets.setOnClickListener(new View.OnClickListener() {
+            boolean openBracket = false;
+            @Override
+            public void onClick(View view) {
+                if (!openBracket) {
+                    pantallaArriba.setText(pantallaArriba.getText().toString() + "(");
+                    openBracket = !openBracket;
+                } else {
+                    pantallaArriba.setText(pantallaArriba.getText().toString() + pantalla.getText().toString()+")");
+                    pantalla.setText(null);
+                    openBracket = !openBracket;
+                }
+            }
+        });
+
+        buttonDot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String textoPantalla = pantalla.getText().toString();
+                if (!textoPantalla.isEmpty() && textoPantalla.charAt(textoPantalla.length() - 1) != '.') {
+                    textoPantalla += buttonDot.getText().toString();
+                    pantalla.setText(textoPantalla);
                 }
             }
         });
