@@ -11,6 +11,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -112,6 +116,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Con el ScriptEngineManager
+                ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+                ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("Javascript");
+                try {
+                    Object resultado = scriptEngine.eval(pantallaArriba.getText().toString());
+                    pantallaArriba.setText(null);
+                    pantalla.setText(""+resultado);
+                } catch (ScriptException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
