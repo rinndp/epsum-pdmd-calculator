@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-
+    implementation("io.apisense:rhino-android:1.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
