@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         Button buttonResult = findViewById(R.id.buttonResult);
         Button buttonBackspace = findViewById(R.id.buttonBackspace);
         Button buttonC = findViewById(R.id.buttonC);
-        Button buttonBrackets = findViewById(R.id.buttonBrackets);
+        Button buttonOpenBracket = findViewById(R.id.buttonOpenBracket);
+        Button buttonCloseBracket = findViewById(R.id.buttonCloseBracket);
 
 
         ArrayList <Button> arrayListButtons = new ArrayList<>();
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         arrayListButtons.add(button7);
         arrayListButtons.add(button8);
         arrayListButtons.add(button9);
+        arrayListButtons.add(buttonOpenBracket);
+        arrayListButtons.add(buttonCloseBracket);
 
         TextView pantalla = findViewById(R.id.screen);
         TextView pantallaArriba = findViewById(R.id.screen2);
@@ -76,12 +79,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
+                String pantallaTextoArriba = pantallaArriba.getText().toString();
+
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
                     if (lastChar != '-' && lastChar != '+') {
                         pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
-                        pantalla.setText(null);
                     }
+                    pantalla.setText(null);
+                } else if (pantallaTextoArriba.isEmpty()){
+                    pantalla.setText("+ ");
                 }
             }
         });
@@ -90,12 +97,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
+
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
                     if (lastChar != '/' && lastChar != '*') {
                         pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " * ");
-                        pantalla.setText(null);
                     }
+                    pantalla.setText(null);
                 }
             }
         });
@@ -104,12 +112,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
+                String pantallaTextoArriba = pantallaArriba.getText().toString();
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
                     if (lastChar != '-' && lastChar != '+') {
                         pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " - ");
-                        pantalla.setText(null);
                     }
+                    pantalla.setText(null);
+                } else if (pantallaTextoArriba.isEmpty()){
+                    pantalla.setText("- ");
                 }
             }
         });
@@ -119,12 +130,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
                 if (!pantallaTexto.isEmpty()) {
-                char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
-                if (lastChar != '/' && lastChar != '*' ) {
-                    pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " / ");
+                    char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
+                    if (lastChar != '/' && lastChar != '*' ) {
+                        pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " / ");
+                    } if (pantallaArriba.getText().toString().charAt(pantallaArriba.getText().toString().length() - 1) == ')')
+                        pantallaArriba.setText(pantallaArriba.getText().toString()+" / ");
+
                     pantalla.setText(null);
-                }
-                }
+                    }
             }
         });
         buttonResult.setOnClickListener(new View.OnClickListener() {
@@ -133,13 +146,21 @@ public class MainActivity extends AppCompatActivity {
                 String operacion = pantallaArriba.getText().toString() + pantalla.getText().toString();
                 try {
                     Expression expression = new Expression(operacion);
-                    String resultado = expression.eval().toString();
-                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                    String resultadoFormateado = decimalFormat.format(Double.parseDouble(resultado));
+                    double resultado = expression.eval().doubleValue();
+
+                    DecimalFormat decimalFormat;
+                    if (Math.abs(resultado) < 1e6) {
+                        decimalFormat = new DecimalFormat("#.######");
+                    } else {
+                        decimalFormat = new DecimalFormat("0.#####E0");
+                    }
+
+                    String resultadoFormateado = decimalFormat.format(resultado);
                     pantallaArriba.setText(null);
                     pantalla.setText(resultadoFormateado);
                 } catch (Exception e) {
-                    pantalla.setText("Error");
+                    pantallaArriba.setText(null);
+                    pantalla.setText("Error: k e lo kepuziste");
                 }
             }
         });
@@ -161,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,20 +194,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonBrackets.setOnClickListener(new View.OnClickListener() {
-            boolean openBracket = false;
-            @Override
-            public void onClick(View view) {
-                if (!openBracket) {
-                    pantallaArriba.setText(pantallaArriba.getText().toString() + "(");
-                    openBracket = !openBracket;
-                } else {
-                    pantallaArriba.setText(pantallaArriba.getText().toString() + pantalla.getText().toString()+")");
-                    pantalla.setText(null);
-                    openBracket = !openBracket;
-                }
-            }
-        });
 
         buttonDot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         for (Button button: arrayListButtons) {
             button.setOnClickListener(new View.OnClickListener() {
