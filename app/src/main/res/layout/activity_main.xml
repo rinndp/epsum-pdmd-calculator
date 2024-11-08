@@ -71,7 +71,7 @@
                 android:backgroundTint="#1D1D44"
                 android:layout_weight="1"
                 android:text="C"
-                android:textColor="#DB3976"
+                android:textColor="#B62D61"
                 />
 
             <Button
@@ -311,7 +311,7 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:backgroundTint="#995454"
+                android:backgroundTint="#A04444"
                 android:fontFamily="serif-monospace"
                 android:text="Calcular"
                 android:textSize="27sp" />
