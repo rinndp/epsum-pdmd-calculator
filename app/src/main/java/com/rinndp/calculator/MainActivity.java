@@ -62,9 +62,13 @@ public class MainActivity extends AppCompatActivity {
         arrayListButtons.add(button9);
 
 
+
+
         TextView pantalla = findViewById(R.id.screen);
         TextView pantallaArriba = findViewById(R.id.screen2);
         pantalla.setText(null);
+
+
 
         buttonC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
                     if (lastChar != '-' && lastChar != '+') {
-                        pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
+                        pantallaArriba.setText(pantallaTextoArriba + "" + pantallaTexto + " + ");
                     }
                     pantalla.setText(null);
                 } else if (pantallaTextoArriba.isEmpty()){
@@ -167,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
         buttonResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (pantalla.getText().toString().isEmpty()) {
+                    pantalla.setText("0");
+                }
                 String operacion = pantallaArriba.getText().toString() + pantalla.getText().toString();
                 try {
                     Expression expression = new Expression(operacion);
@@ -183,8 +190,8 @@ public class MainActivity extends AppCompatActivity {
                     pantallaArriba.setText(pantallaArriba.getText().toString() + pantalla.getText().toString() +" =");
                     pantalla.setText(resultadoFormateado);
                 } catch (Exception e) {
-                    pantallaArriba.setText(null);
-                    pantalla.setText("Error: k e lo kepuziste");
+                    pantallaArriba.setText("Error:");
+                    pantalla.setText("k e lo kepuziste");
                 }
             }
         });
