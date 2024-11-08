@@ -60,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
         arrayListButtons.add(button7);
         arrayListButtons.add(button8);
         arrayListButtons.add(button9);
-        arrayListButtons.add(buttonOpenBracket);
-        arrayListButtons.add(buttonCloseBracket);
+
 
         TextView pantalla = findViewById(R.id.screen);
         TextView pantallaArriba = findViewById(R.id.screen2);
@@ -80,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
                 String pantallaTextoArriba = pantallaArriba.getText().toString();
+                if (!pantallaTextoArriba.isEmpty()) {
+                    if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                        pantallaArriba.setText(null);
+                    }
+                }
 
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
@@ -97,6 +101,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
+                String pantallaTextoArriba = pantallaArriba.getText().toString();
+
+                if (!pantallaTextoArriba.isEmpty()) {
+                    if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                        pantallaArriba.setText(null);
+                    }
+                }
 
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
@@ -113,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
                 String pantallaTextoArriba = pantallaArriba.getText().toString();
+
+                if (!pantallaTextoArriba.isEmpty()) {
+                    if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                        pantallaArriba.setText(null);
+                    }
+                }
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
                     if (lastChar != '-' && lastChar != '+') {
@@ -129,6 +146,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
+                String pantallaTextoArriba = pantallaArriba.getText().toString();
+
+                if (!pantallaTextoArriba.isEmpty()) {
+                    if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                        pantallaArriba.setText(null);
+                    }
+                }
                 if (!pantallaTexto.isEmpty()) {
                     char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
                     if (lastChar != '/' && lastChar != '*' ) {
@@ -205,12 +229,177 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        buttonOpenBracket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pantallaTexto = pantalla.getText().toString();
+                pantallaTexto += buttonOpenBracket.getText().toString();
+                pantalla.setText(pantallaTexto);
+
+                buttonPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                        if (!pantallaTexto.isEmpty()) {
+                            if (lastChar != '-' && lastChar != '+') {
+                                pantalla.setText(pantallaTexto+ " + ");
+                            }
+                        }
+                    }
+                });
+
+                buttonSubstract.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                        if (!pantallaTexto.isEmpty()) {
+                            if (lastChar != '-' && lastChar != '+') {
+                                pantalla.setText(pantallaTexto+ " - ");
+                            }
+                        }
+                    }
+                });
+
+                buttonMultiply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                        if (!pantallaTexto.isEmpty()) {
+                            if (lastChar != '*' && lastChar != '/') {
+                                pantalla.setText(pantallaTexto+ " * ");
+                            }
+                        }
+                    }
+                });
+
+                buttonDivide.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                        if (!pantallaTexto.isEmpty()) {
+                            if (lastChar != '*' && lastChar != '/') {
+                                pantalla.setText(pantallaTexto+ " / ");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        buttonCloseBracket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pantallaTexto = pantalla.getText().toString();
+                pantalla.setText(pantallaTexto+")");
+
+                buttonPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        String pantallaTextoArriba = pantallaArriba.getText().toString();
+                        if (!pantallaTextoArriba.isEmpty()) {
+                            if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                                pantallaArriba.setText(null);
+                            }
+                        }
+
+                        if (!pantallaTexto.isEmpty()) {
+                            char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                            if (lastChar != '-' && lastChar != '+') {
+                                pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
+                            }
+                            pantalla.setText(null);
+                        } else if (pantallaTextoArriba.isEmpty()){
+                            pantalla.setText("+ ");
+                        }
+                    }
+                });
+
+                buttonMultiply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        String pantallaTextoArriba = pantallaArriba.getText().toString();
+
+                        if (!pantallaTextoArriba.isEmpty()) {
+                            if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                                pantallaArriba.setText(null);
+                            }
+                        }
+
+                        if (!pantallaTexto.isEmpty()) {
+                            char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                            if (lastChar != '/' && lastChar != '*') {
+                                pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " * ");
+                            }
+                            pantalla.setText(null);
+                        }
+                    }
+                });
+
+                buttonSubstract.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        String pantallaTextoArriba = pantallaArriba.getText().toString();
+
+                        if (!pantallaTextoArriba.isEmpty()) {
+                            if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                                pantallaArriba.setText(null);
+                            }
+                        }
+                        if (!pantallaTexto.isEmpty()) {
+                            char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
+                            if (lastChar != '-' && lastChar != '+') {
+                                pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " - ");
+                            }
+                            pantalla.setText(null);
+                        } else if (pantallaTextoArriba.isEmpty()){
+                            pantalla.setText("- ");
+                        }
+                    }
+                });
+
+                buttonDivide.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pantallaTexto = pantalla.getText().toString();
+                        String pantallaTextoArriba = pantallaArriba.getText().toString();
+
+                        if (!pantallaTextoArriba.isEmpty()) {
+                            if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
+                                pantallaArriba.setText(null);
+                            }
+                        }
+                        if (!pantallaTexto.isEmpty()) {
+                            char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
+                            if (lastChar != '/' && lastChar != '*' ) {
+                                pantallaArriba.setText(pantallaArriba.getText().toString()+""+ pantallaTexto+ " / ");
+                            } if (pantallaArriba.getText().toString().charAt(pantallaArriba.getText().toString().length() - 1) == ')')
+                                pantallaArriba.setText(pantallaArriba.getText().toString()+" / ");
+
+                            pantalla.setText(null);
+                        }
+                    }
+                });
+            }
+        });
 
 
         for (Button button: arrayListButtons) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    if (!pantallaArriba.getText().toString().isEmpty()) {
+                        if (pantallaArriba.getText().toString().charAt(pantallaArriba.length() - 1) == '=') {
+                            pantallaArriba.setText(null);
+                        }
+                    }
                     String textoPantalla = pantalla.getText().toString();
                     textoPantalla += button.getText().toString();
                     pantalla.setText(textoPantalla);
