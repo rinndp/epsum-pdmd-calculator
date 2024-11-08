@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
                     DecimalFormat decimalFormat;
                     if (Math.abs(resultado) < 1e6) {
-                        decimalFormat = new DecimalFormat("#.######");
+                        decimalFormat = new DecimalFormat("#,###.##");
                     } else {
                         decimalFormat = new DecimalFormat("0.#####E0");
                     }
