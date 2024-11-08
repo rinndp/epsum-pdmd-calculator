@@ -42,18 +42,20 @@
                 android:id="@+id/screen2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
                 android:textColor="#A9A9A9"
                 android:textColorHint="#E2FEFAE0"
-                android:textSize="27sp" />
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/screen"
-                android:layout_width="328dp"
+                android:layout_width="333dp"
                 android:layout_height="81dp"
                 android:hint="0"
+                android:textAlignment="textEnd"
                 android:textColor="@color/cremita"
                 android:textColorHint="@color/cremita"
-                android:textSize="40sp" />
+                android:textSize="45sp" />
 
         </LinearLayout>
         <LinearLayout
@@ -147,7 +149,7 @@
                 android:backgroundTint="#1D1D44"
                 android:layout_weight="1"
                 android:text="+"
-                android:textColor="@color/cremita"/>
+                android:textColor="#E91E63"/>
         </LinearLayout>
 
         <LinearLayout
@@ -193,8 +195,8 @@
                 android:layout_height="80dp"
                 android:backgroundTint="#1D1D44"
                 android:layout_weight="1"
-                android:text="-"
-                android:textColor="@color/cremita"/>
+                android:text="--"
+                android:textColor="#E91E63" />
 
         </LinearLayout>
         <LinearLayout
@@ -241,7 +243,7 @@
                 android:backgroundTint="#1D1D44"
                 android:layout_weight="1"
                 android:text="x"
-                android:textColor="@color/cremita"/>
+                android:textColor="#E91E63"/>
 
         </LinearLayout>
 
@@ -290,7 +292,7 @@
                 android:backgroundTint="#1D1D44"
                 android:layout_weight="1"
                 android:text="/"
-                android:textColor="@color/cremita"
+                android:textColor="#E91E63"
                 />
 
         </LinearLayout>
@@ -309,10 +311,10 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:backgroundTint="#A1918E7C"
+                android:backgroundTint="#995454"
                 android:fontFamily="serif-monospace"
                 android:text="Calcular"
-                android:textSize="22sp" />
+                android:textSize="27sp" />
 
         </LinearLayout>
 

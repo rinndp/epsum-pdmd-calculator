@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     String resultadoFormateado = decimalFormat.format(resultado);
-                    pantallaArriba.setText(null);
+                    pantallaArriba.setText(pantallaArriba.getText().toString() + pantalla.getText().toString() +" =");
                     pantalla.setText(resultadoFormateado);
                 } catch (Exception e) {
                     pantallaArriba.setText(null);
