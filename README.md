@@ -1,1 +1,1 @@
-<p style="center">Calculadora</p>
+<p align="center">Calculadora</p>
