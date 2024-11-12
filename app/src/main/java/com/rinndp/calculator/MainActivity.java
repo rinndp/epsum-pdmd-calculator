@@ -83,16 +83,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String pantallaTexto = pantalla.getText().toString();
                 String pantallaTextoArriba = pantallaArriba.getText().toString();
+
                 if (!pantallaTextoArriba.isEmpty()) {
                     if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
                         pantallaArriba.setText(null);
                     }
                 }
-
                 if (!pantallaTexto.isEmpty()) {
-                    char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                    char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
                     if (lastChar != '-' && lastChar != '+') {
-                        pantallaArriba.setText(pantallaTextoArriba + "" + pantallaTexto + " + ");
+                        pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
                     }
                     pantalla.setText(null);
                 } else if (pantallaTextoArriba.isEmpty()){
@@ -308,14 +308,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String pantallaTexto = pantalla.getText().toString();
                         String pantallaTextoArriba = pantallaArriba.getText().toString();
+
                         if (!pantallaTextoArriba.isEmpty()) {
                             if (pantallaTextoArriba.charAt(pantallaArriba.length() - 1) == '=') {
                                 pantallaArriba.setText(null);
                             }
                         }
-
                         if (!pantallaTexto.isEmpty()) {
-                            char lastChar = pantallaTexto.charAt(pantallaTexto.length() - 1);
+                            char lastChar = pantallaTexto.charAt(pantallaTexto.length()-1);
                             if (lastChar != '-' && lastChar != '+') {
                                 pantallaArriba.setText(pantallaArriba.getText().toString() + "" + pantallaTexto + " + ");
                             }
